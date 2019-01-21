@@ -55,13 +55,14 @@ img{ max-width:100%;}
   border-bottom: 1px solid #c4c4c4;
   margin: 0;
   padding: 18px 16px 10px;
+  cursor: pointer;
 }
 .inbox_chat { height: 550px; overflow-y: scroll;}
 
 .active_chat{ background:#ebebeb;}
 
 .incoming_msg_img {
-  display: inline-block;
+  margin-left: 16px;
   width: 6%;
 }
 .received_msg {
@@ -102,6 +103,9 @@ img{ max-width:100%;}
   width:100%;
 }
 .outgoing_msg{ overflow:hidden; margin:26px 0 26px;}
+.incoming_msg {
+  margin:26px 0 26px;
+}
 .sent_msg {
   float: right;
   width: 46%;

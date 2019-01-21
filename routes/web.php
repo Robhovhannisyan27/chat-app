@@ -17,5 +17,5 @@ Route::get('/', 'HomeController@index')->name('home');
 Auth::routes();
 
 Route::resource('rooms', 'RoomsController');
-Route::get('messages', 'ChatsController@fetchMessages');
+Route::get('messages', 'RoomsController@fetchMessages');
 Route::post('messages', 'RoomsController@sendMessage');

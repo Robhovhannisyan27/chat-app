@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Room;
+use Auth;
 use App\Message;
 use App\Events\MessageSent;
 use App\Http\Requests\RoomRequest;
@@ -25,9 +26,9 @@ class RoomsController extends Controller
     *
     * @return Message
     */
-    public function fetchMessages()
+    public function fetchMessages(Request $request)
     {
-        return Message::with('user')->get();
+        return Message::with('user')->where('room_id', $request->room)->get();
     }
 
     /**
@@ -38,13 +39,16 @@ class RoomsController extends Controller
     */
     public function sendMessage(Request $request)
     {
-        $user = Auth::user();
+        $inputs = $request->all();
+        if(Auth::user()) {
+            $inputs['user_id'] = Auth::id();
+        }
+        $message = Message::create($inputs);
+        if($message->user_id) {
+            $message = Message::with('user')->where('id', $message->id)->first();
+        }
 
-        $message = $user->messages()->create([
-            'message' => $request->input('message')
-        ]);
-
-        broadcast(new MessageSent($user, $message))->toOthers();
+        broadcast(new MessageSent($message))->toOthers();
 
         return ['status' => 'Message Sent!'];
     }
