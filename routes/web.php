@@ -16,7 +16,7 @@ Route::get('/', 'HomeController@index')->name('home');
 
 Auth::routes();
 
-Route::resource('rooms', 'RoomsController')only([
+Route::resource('rooms', 'RoomsController')->only([
     'create', 'store'
 ]);
 Route::get('messages', 'RoomsController@fetchMessages');
