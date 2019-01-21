@@ -15,9 +15,9 @@ class HomeController extends Controller
     public function index()
     {
         if(\Auth::check()) {
-            $rooms = Room::get();
+            $rooms = Room::where('protection', 1)->get();
         } else {
-            $rooms = Room::where('accessibility', '1')->get();
+            $rooms = Room::where('accessibility', '1')->where('protection', 1)->get();
         }
         return view('welcome', compact('rooms'));
     }

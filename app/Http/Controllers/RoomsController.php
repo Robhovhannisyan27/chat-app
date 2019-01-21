@@ -12,16 +12,6 @@ use App\Http\Requests\RoomRequest;
 class RoomsController extends Controller
 {
     /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
-    {
-        //
-    }
-
-    /**
     * Fetch all messages
     *
     * @return Message
@@ -70,54 +60,23 @@ class RoomsController extends Controller
      */
     public function store(RoomRequest $request)
     {
-        if(Room::create($request->inputs())){
+        if($room = Room::create($request->inputs())){
+            if($room->protection == 2) {
+                $url = $request->url().'/private/'.$room->uuid;
+                return redirect('/')->with(['status' => 'success', 'url' => $url]);
+            }
             return redirect('/')->with('status', 'success');
         }
         return redirect('/')->with('status', 'error');
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
+    public function getPrivateRoom($uuid) {
+        if(\Auth::check()) {
+            $rooms = Room::where('uuid', $uuid)->get();
+        } else {
+            $rooms = Room::where('accessibility', '1')->where('uuid', $uuid)->get();
+        }
+        return view('welcome', compact('rooms'));
     }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
-    }
+    
 }

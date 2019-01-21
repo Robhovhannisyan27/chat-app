@@ -46,6 +46,20 @@
 			  	</label>
 			</div>
 		</div>
+		<div>
+			<div class="form-check form-check-inline">
+			  	<input class="form-check-input" type="radio" name="protection" id="all_users" value="1" checked>
+			  	<label class="form-check-label" for="protection">
+			    	Public
+			  	</label>
+			</div>
+			<div class="form-check form-check-inline">
+			  	<input class="form-check-input" type="radio" name="protection" id="logged_in" value="2">
+			  	<label class="form-check-label" for="protection">
+			    	Private
+			  	</label>
+			</div>
+		</div>
 	  	<button type="submit" class="btn btn-primary">Create</button>
 	</form>
 </div>

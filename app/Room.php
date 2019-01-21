@@ -13,7 +13,7 @@ class Room extends Model
      * @var array
      */
     protected $fillable = [
-        'name', 'image', 'accessibility',
+        'name', 'image', 'accessibility', 'protection', 'uuid'
     ];
 
     public function users()

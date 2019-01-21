@@ -30,7 +30,8 @@ class RoomRequest extends FormRequest
 
     public function inputs(){
         $inputs = $this->except(['_token']);
-        
+        $inputs['uuid'] = str_random(24);
+
         if($this->hasFile('image')) {   
             $image = $this->file('image');
             $inputs['image'] = time().'.'.$image->getClientOriginalExtension();

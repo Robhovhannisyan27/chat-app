@@ -16,6 +16,9 @@ Route::get('/', 'HomeController@index')->name('home');
 
 Auth::routes();
 
-Route::resource('rooms', 'RoomsController');
+Route::resource('rooms', 'RoomsController')only([
+    'create', 'store'
+]);;
 Route::get('messages', 'RoomsController@fetchMessages');
 Route::post('messages', 'RoomsController@sendMessage');
+Route::get('rooms/private/{uuid}', 'RoomsController@getPrivateRoom');
